@@ -36,7 +36,7 @@ Measure=WebParser
 
 URL=https://nominatim.openstreetmap.org/search/#WeatherLocation#?format=json&limit=1&accept-language=#Language#
 RegExp=(?siU)"display_name":"(.*)"
-UpdateRate=600
+UpdateRate=9000
 StringIndex=1
 DynamicVariables=1
 RegExpSubstitute=1 
@@ -55,7 +55,7 @@ Substitute="c":"si","f":"us","C":"si","F":"us"
 Measure=WebParser
 
 URL=https://api.darksky.net/forecast/#Key#/[&MeasureLocationLatitude],[&MeasureLocationLongitude]?exclude=minutely,hourly,alerts,flags&units=[&Unitset]&lang=#Language#
-RegExp=(?siU){.*"currently":{(.*)},"daily":{"summary":"(.*)",.*,"data":\[{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)}\]},"offset":(.*)}
+RegExp=(?siU).*"currently":(.*),"daily":.*"summary":"(.*)",.*,"data":.*{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)}.*},"offset":(.*)}
 UpdateRate=(60*15)
 
 FinishAction=[!Log "Download finished." Notice] [!EnableMeasureGroup Processing] [!UpdateMeasureGroup Processing] [!UpdateMeter *] [!UpdateMeter *] [!Redraw]

@@ -1,9 +1,9 @@
 [Variables]
-Key=
+Key=1f3160bad58a17251b0a1f2f4778bbf3
 ;The Dark Sky API key.
 ;You have to create an account on darksky.net and get a free API key to be able to use this.
 
-WeatherLocation=
+WeatherLocation=Val-d'Or
 ;Just put your address or the name of the place (school, company, etc.) here.
 ;Please check the log to see if the skin got the right location.
 
@@ -13,7 +13,7 @@ WeatherUnits=c
 ;f,F - Imperial units.
 ;c,C - Metric units.
 
-Language=en
+Language=fr
 ;Supported values and thus languages (ordered alphabetically) are: 
 ;ar - Arabic, az - Azerbaijani, be - Belarusian, bg - Bulgarian, bn - Bengali
 ;bs - Bosnian, ca - Catalan, cs - Czech, da - Danish, de - German, el - Greek
