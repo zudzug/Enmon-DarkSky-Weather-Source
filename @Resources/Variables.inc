@@ -1,19 +1,17 @@
 [Variables]
-Key=1f3160bad58a17251b0a1f2f4778bbf3
-;The Dark Sky API key.
-;You have to create an account on darksky.net and get a free API key to be able to use this.
 
-WeatherLocation=Val-d'Or
-;Just put your address or the name of the place (school, company, etc.) here.
-;Please check the log to see if the skin got the right location.
+DisplayName=New York
+Address=Statue of Liberty, Flagpole Plaza, Liggett Terrace, Manhattan Community Board 1, Manhattan, New York County, New York, 10004, United States of America
+LocationLat=40.68925
+LocationLong=-74.04455
 
-WeatherUnits=c
-;NOTE: You can use both capital or lowercase for the display.
-;The units for the weather info. Valid values are:
-;f,F - Imperial units.
-;c,C - Metric units.
+;You need an API key from DarkSky.net 
+;To get an API key you need to sign up it's free
+;You are allowed 1000 requests per day in the free plan. 
+;This skin, by default, performs 4 requests an hour, so 96 requests per day per computer. 
+;Do not reuse the same API key for more than 9 to 10 personnal computers.
+APIKey=1f3160bad58a17251b0a1f2f4778bbf3
 
-Language=fr
 ;Supported values and thus languages (ordered alphabetically) are: 
 ;ar - Arabic, az - Azerbaijani, be - Belarusian, bg - Bulgarian, bn - Bengali
 ;bs - Bosnian, ca - Catalan, cs - Czech, da - Danish, de - German, el - Greek
@@ -25,16 +23,27 @@ Language=fr
 ;pt - Portuguese, ro - Romanian, ru - Russian, sk - Slovak, sl - Slovenian, sr - Serbian
 ;sv - Swedish, ta - Tamil, te - Telugu, tet - Tetum, tr - Turkish, uk - Ukrainian
 ;ur - Urdu, zh - simplified Chinese, zh-tw - traditional Chinese
+lang=en 
 
-;================================================
+;Values possible for the time and date language. The same as "lang", but it also supports defaulting to the Windows System Language
+SystemLang=en 
 
-;Increase or decrease this value to make the skin bigger or smaller.
-;A scale of "2.00" will be 4x the area.
-Scale=0.42
+; UnitOfMeasure can be auto, ca, uk2, us, si
+; auto: automatically select units based on geographic location
+; ca: same as si, except that windSpeed is in kilometers per hour
+; uk2: same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
+; us: Imperial units (the default)
+; si: SI units
+UnitOfMeasure=si
 
-;================================================
+ScrollMouseIncrement=0.02
+Scale=0.66
 
-TextColor1=255,255,255
+Format=H
+Hidden=0
+Hidden2=1
+
+TextColor1=0,0,0
 TextColor2=255,255,255
-;Enter the color for the text and vector icons here.
-;Valid values are formatted "RRR, GGG, BBB" with values of 0 - 255.
+SettingsTextColor1=0,0,0
+SettingsTextColor2=255,255,255

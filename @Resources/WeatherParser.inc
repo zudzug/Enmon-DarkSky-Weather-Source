@@ -1,7 +1,12 @@
 [Variables]
-IconNames="clear-day":"clear_day", "clear-night":"clear_night", "rain":"rain", "snow":"snow", "sleet":"sleet", "wind":"wind", "fog":"fog", "cloudy":"cloudy", "partly-cloudy-day":"partly_cloudy_day", "partly-cloudy-night":"partly_cloudy_night", "hail":"sleet", "thunderstorm":"storm", "tornado":"storm", "":"unknown"
 @include=#@#Variables.inc
-CurrentRegExp=.*,"summary":"(.*)","icon":"(.*)",.*,"temperature":(.*),.*
+
+IconNames="clear-day":"clear_day", "clear-night":"clear_night", "rain":"rain", "snow":"snow", "sleet":"sleet", "wind":"wind", "fog":"fog", "cloudy":"cloudy", "partly-cloudy-day":"partly_cloudy_day", "partly-cloudy-night":"partly_cloudy_night", "hail":"sleet", "thunderstorm":"storm", "tornado":"storm", "":"unknown"
+
+DarkSkyWebSite="https://api.darksky.net/forecast/#APIKey#/#LocationLat#,#LocationLong#?exclude=minutely,hourly,alerts,flags&lang=#lang#&units=#UnitOfMeasure#"
+
+CurrentRegExp=.*,"summary":"(.*)","icon":"(.*)",.*,"temperature":(.*),"apparentTemperature":(.*),.*
+
 DayNRegExp="time":(.*),"summary":"(.*)","icon":"(.*)",.*,"temperatureHigh":(.*),.*,"temperatureLow":(.*),.*
 
 TimestampOffset=11644473600
@@ -11,70 +16,46 @@ TimestampOffset=11644473600
 
 [MeasureLocation]
 Measure=WebParser
-
-URL=https://nominatim.openstreetmap.org/search/#WeatherLocation#?format=json&limit=1
+URL=https://nominatim.openstreetmap.org/search/#Address#?format=json&limit=1
 RegExp=(?siU)"lat":"(.*)","lon":"(.*)","display_name":"(.*)"
-UpdateRate=-1
+;UpdateRate=-1
 StringIndex=3
-
-FinishAction=[!Log "Location: [MeasureLocation]"] [!EnableMeasure MeasureDarkSky] [!UpdateMeasure MeasureDarkSky]
-
 DynamicVariables=1
 
 [MeasureLocationLatitude]
 Measure=WebParser
 URL=[MeasureLocation]
 StringIndex=1
+FinishAction=[!WriteKeyValue Variables LocationLat "[&MeasureLocationLatitude]" "#@#Variables.inc"][!Refresh *]
+DynamicVariables=1
 
 [MeasureLocationLongitude]
 Measure=WebParser
 URL=[MeasureLocation]
 StringIndex=2
-
-[MeasureLocation2]
-Measure=WebParser
-
-URL=https://nominatim.openstreetmap.org/search/#WeatherLocation#?format=json&limit=1&accept-language=#Language#
-RegExp=(?siU)"display_name":"(.*)"
-UpdateRate=9000
-StringIndex=1
+FinishAction=[!WriteKeyValue Variables LocationLong "[&MeasureLocationLongitude]" "#@#Variables.inc"][!Refresh *]
 DynamicVariables=1
-RegExpSubstitute=1 
-Substitute="(^[^,]+,).+,([^,]+)$":"\1\2"
-
-[Unitset]
-Measure=String
-String=#WeatherUnits#
-RegExpSubstitute=1 
-DynamicVariables=1
-Substitute="c":"si","f":"us","C":"si","F":"us"
 
 ;================================================
 
 [MeasureDarkSky]
 Measure=WebParser
-
-URL=https://api.darksky.net/forecast/#Key#/[&MeasureLocationLatitude],[&MeasureLocationLongitude]?exclude=minutely,hourly,alerts,flags&units=[&Unitset]&lang=#Language#
+URL=#DarkSkyWebSite#
 RegExp=(?siU).*"currently":(.*),"daily":.*"summary":"(.*)",.*,"data":.*{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)}.*},"offset":(.*)}
+;60 seconds (which is 1 minute) x 15 = 15 minutes
 UpdateRate=(60*15)
-
-FinishAction=[!Log "Download finished." Notice] [!EnableMeasureGroup Processing] [!UpdateMeasureGroup Processing] [!UpdateMeter *] [!UpdateMeter *] [!Redraw]
-
-Disabled=1
 DynamicVariables=1
 
 [MeasureForecastSummary]
 Measure=WebParser
 URL=[MeasureDarkSky]
 StringIndex=2
-
 Substitute="":"N/A"
 
 [MeasureUTCOffset]
 Measure=WebParser
 URL=[MeasureDarkSky]
 StringIndex=11
-
 Substitute="":"0"
 
 ;================================================
@@ -94,7 +75,6 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#CurrentRegExp#
 StringIndex=1
 StringIndex2=2
-
 Substitute="#IconNames#"
 
 [MeasureCurrentTemperatureRAW]
@@ -103,18 +83,13 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#CurrentRegExp#
 StringIndex=1
 StringIndex2=3
-
 Substitute="":"0"
 
 [MeasureCurrentTemperature]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
-
 UpdateDivider=-1
 DynamicVariables=1
-Disabled=1
-
 RegExpSubstitute=1 
 Substitute="-0":"0"
 
@@ -126,32 +101,25 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#DayNRegExp#
 StringIndex=3
 StringIndex2=1
-
 Substitute="":"0"
+UpdateDivider=-1
+DynamicVariables=1
 
 [MeasureDay0Weekday]
-Group=Processing
 Measure=Time
-
 Timestamp=([MeasureDay0Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
-
+FormatLocale=#SystemLang#
 UpdateDivider=-1
 DynamicVariables=1
-Disabled=1
 
 [MeasureDay0WeekdayShort]
-Group=Processing
 Measure=Time
-
 Timestamp=([MeasureDay0Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
-
+FormatLocale=#SystemLang#
 UpdateDivider=-1
 DynamicVariables=1
-Disabled=1
 
 [MeasureDay0Summary]
 Measure=WebParser
@@ -159,8 +127,9 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#DayNRegExp#
 StringIndex=3
 StringIndex2=2
-
 Substitute="":"N/A"
+UpdateDivider=-1
+DynamicVariables=1
 
 [MeasureDay0Icon]
 Measure=WebParser
@@ -168,8 +137,9 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#DayNRegExp#
 StringIndex=3
 StringIndex2=3
-
 Substitute="#IconNames#"
+UpdateDivider=-1
+DynamicVariables=1
 
 [MeasureDay0TemperatureHighRAW]
 Measure=WebParser
@@ -177,18 +147,16 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#DayNRegExp#
 StringIndex=3
 StringIndex2=4
-
 Substitute="":"0"
+UpdateDivider=-1
+DynamicVariables=1
 
 [MeasureDay0TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
-
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
-
 RegExpSubstitute=1 
 Substitute="-0":"0"
 
@@ -198,18 +166,15 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#DayNRegExp#
 StringIndex=3
 StringIndex2=5
-
 Substitute="":"0"
-
-[MeasureDay0TemperatureLow]
-Group=Processing
-Measure=Calc
-Formula=Round([#CurrentSection#RAW])
-
 UpdateDivider=-1
 DynamicVariables=1
-Disabled=1
 
+[MeasureDay0TemperatureLow]
+Measure=Calc
+Formula=Round([#CurrentSection#RAW])
+UpdateDivider=-1
+DynamicVariables=1
 RegExpSubstitute=1 
 Substitute="-0":"0"
 
@@ -221,28 +186,22 @@ URL=[MeasureDarkSky]
 RegExp=(?siU)#DayNRegExp#
 StringIndex=4
 StringIndex2=1
-
 Substitute="":"0"
 
 [MeasureDay1Weekday]
-Group=Processing
 Measure=Time
-
 Timestamp=([MeasureDay1Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
-
+FormatLocale=#SystemLang#
 UpdateDivider=-1
 DynamicVariables=1
-Disabled=1
 
 [MeasureDay1WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay1Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -276,7 +235,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay1TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -297,7 +255,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay1TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -320,24 +277,22 @@ StringIndex2=1
 Substitute="":"0"
 
 [MeasureDay2Weekday]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay2Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
 
 [MeasureDay2WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay2Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -371,7 +326,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay2TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -392,7 +346,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay2TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -415,24 +368,22 @@ StringIndex2=1
 Substitute="":"0"
 
 [MeasureDay3Weekday]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay3Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
 
 [MeasureDay3WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay3Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -466,7 +417,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay3TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -487,7 +437,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay3TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -510,24 +459,22 @@ StringIndex2=1
 Substitute="":"0"
 
 [MeasureDay4Weekday]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay4Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
 
 [MeasureDay4WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay4Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -561,7 +508,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay4TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -582,7 +528,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay4TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -605,24 +550,22 @@ StringIndex2=1
 Substitute="":"0"
 
 [MeasureDay5Weekday]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay5Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
 
 [MeasureDay5WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay5Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -656,7 +599,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay5TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -677,7 +619,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay5TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -700,24 +641,22 @@ StringIndex2=1
 Substitute="":"0"
 
 [MeasureDay6Weekday]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay6Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
 
 [MeasureDay6WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay6Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -751,7 +690,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay6TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -772,7 +710,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay6TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -795,24 +732,22 @@ StringIndex2=1
 Substitute="":"0"
 
 [MeasureDay7Weekday]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay7Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%A
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
 Disabled=1
 
 [MeasureDay7WeekdayShort]
-Group=Processing
 Measure=Time
 
 Timestamp=([MeasureDay7Timestamp]+#TimestampOffset#+[MeasureUTCOffset]*60*60)
 Format=%a
-FormatLocale=#Language#
+FormatLocale=#SystemLang#
 
 UpdateDivider=-1
 DynamicVariables=1
@@ -846,7 +781,6 @@ StringIndex2=4
 Substitute="":"0"
 
 [MeasureDay7TemperatureHigh]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
@@ -867,7 +801,6 @@ StringIndex2=5
 Substitute="":"0"
 
 [MeasureDay7TemperatureLow]
-Group=Processing
 Measure=Calc
 Formula=Round([#CurrentSection#RAW])
 
