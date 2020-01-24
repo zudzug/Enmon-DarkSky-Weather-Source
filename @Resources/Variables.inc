@@ -39,11 +39,14 @@ UnitOfMeasure=si
 ScrollMouseIncrement=0.02
 Scale=0.66
 
-Format=H
-Hidden=0
-Hidden2=1
+Format=#I
+Hidden=1
+Hidden2=0
 
 TextColor1=0,0,0
 TextColor2=255,255,255
 SettingsTextColor1=0,0,0
 SettingsTextColor2=255,255,255
+
+;11644473600 is the amount of seconds between 01-01-1601 and 01-01-1970. It's the difference between Unix time and Windows time.
+UnixTimeOffset=11644473600
