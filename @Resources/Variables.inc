@@ -1,9 +1,9 @@
 [Variables]
 
-DisplayName=New York
-Address=Statue of Liberty, Flagpole Plaza, Liggett Terrace, Manhattan Community Board 1, Manhattan, New York County, New York, 10004, United States of America
-LocationLat=40.68925
-LocationLong=-74.04455
+DisplayName=Athena
+Address=Musée de l'Acropole d'Athènes, 15, ?????s??? ??e?pa??t??, ????p???, ???? ??sµ??, Athènes, ??µ?? ????a???, ?e??fe?e?a?? ???t?ta ?e?t????? ??µ?a ??????, Attique, 11742, Grèce
+LocationLat=37.96857
+LocationLong=23.72848
 
 ;You need an API key from DarkSky.net 
 ;To get an API key you need to sign up it's free
@@ -23,10 +23,10 @@ APIKey=1f3160bad58a17251b0a1f2f4778bbf3
 ;pt - Portuguese, ro - Romanian, ru - Russian, sk - Slovak, sl - Slovenian, sr - Serbian
 ;sv - Swedish, ta - Tamil, te - Telugu, tet - Tetum, tr - Turkish, uk - Ukrainian
 ;ur - Urdu, zh - simplified Chinese, zh-tw - traditional Chinese
-lang=en 
+lang=fr 
 
 ;Values possible for the time and date language. The same as "lang", but it also supports defaulting to the Windows System Language
-SystemLang=en 
+SystemLang=fr 
 
 ; UnitOfMeasure can be auto, ca, uk2, us, si
 ; auto: automatically select units based on geographic location
@@ -34,7 +34,7 @@ SystemLang=en
 ; uk2: same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
 ; us: Imperial units (the default)
 ; si: SI units
-UnitOfMeasure=si
+UnitOfMeasure=us
 
 ScrollMouseIncrement=0.02
 Scale=0.66
