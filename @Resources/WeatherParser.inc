@@ -3,17 +3,14 @@
 
 IconNames="clear-day":"clear_day", "clear-night":"clear_night", "rain":"rain", "snow":"snow", "sleet":"sleet", "wind":"wind", "fog":"fog", "cloudy":"cloudy", "partly-cloudy-day":"partly_cloudy_day", "partly-cloudy-night":"partly_cloudy_night", "hail":"sleet", "thunderstorm":"storm", "tornado":"storm", "":"unknown"
 
-DarkSkyWebSite="https://api.darksky.net/forecast/#APIKey#/#LocationLat#,#LocationLong#?exclude=minutely,hourly,alerts,flags&lang=#lang#&units=#UnitOfMeasure#"
-
 CurrentRegExp=.*,"summary":"(.*)","icon":"(.*)",.*,"temperature":(.*),"apparentTemperature":(.*),"dewPoint":.*
-
-DayNRegExp="time":(.*),"summary":"(.*)","icon":"(.*)",.*,"temperatureHigh":(.*),.*,"temperatureLow":(.*),"temperatureLowTime":.*
+DayNRegExp="time":(.*),"summary":"(.*)","icon":"(.*)","sunriseTime".*,"temperatureHigh":(.*),.*,"temperatureLow":(.*),"temperatureLowTime":.*
 
 ;================================================
 
 [MeasureDarkSky]
 Measure=WebParser
-URL=#DarkSkyWebSite#
+URL=https://api.darksky.net/forecast/#APIKey#/#LocationLat#,#LocationLong#?exclude=minutely,hourly,alerts,flags&lang=#lang#&units=#UnitOfMeasure#
 RegExp=(?siU).*"currently":{(.*)},"daily":.*,"data":.*{.*},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)},{(.*)}.*},"offset":.*}
 ;60 seconds (which is 1 minute) x 15 = update every 15 minutes
 UpdateRate=(60*15)
@@ -609,3 +606,19 @@ Substitute="-0":"0"
 DynamicVariables=1
 
 ;================================================
+[MeasureTempUnit]
+; UnitOfMeasure can be auto, ca, uk2, us, si
+; auto: automatically select units based on geographic location
+; ca: same as si, except that windSpeed is in kilometers per hour
+; uk2: same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
+; us: Imperial units (the default)
+; si: SI units
+Measure=String
+String=#UnitOfMeasure#
+RegExpSubstitute=1
+Substitute="ca":"C","SI":"C","si":"C","us":"F","uk2":"C","auto":"C"
+
+[MeasureLocation]
+Measure=String
+String=#DisplayName#
+
