@@ -10,7 +10,7 @@ LocationLong=23.72848
 ;You are allowed 1000 requests per day in the free plan. 
 ;This skin, by default, performs 4 requests an hour, so 96 requests per day per computer. 
 ;Do not reuse the same API key for more than 9 to 10 personnal computers.
-APIKey=1f3160bad58a17251b0a1f2f4778bbf3
+APIKey=YOURKEYHERE
 
 ;Supported values and thus languages (ordered alphabetically) are: 
 ;ar - Arabic, az - Azerbaijani, be - Belarusian, bg - Bulgarian, bn - Bengali
