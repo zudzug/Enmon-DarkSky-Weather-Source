@@ -1,3 +1,11 @@
+--[[
+Name=ScaleWindows
+Author=Thankarezos
+Information=Script to change the UI scale of other skins
+Version=1.0
+License=Creative Commons Attribution-Non-Commercial-Share Alike 3.0
+]]
+
 function Initialize()
 	Scale = SKIN:GetVariable('Scale', 'n/a')
 	ScaleChange = SKIN:GetVariable('ScaleChange', 'n/a')
