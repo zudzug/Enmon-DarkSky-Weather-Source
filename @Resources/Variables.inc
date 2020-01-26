@@ -1,16 +1,16 @@
 [Variables]
 
-DisplayName=Athena
-Address=Musée de l'Acropole d'Athènes, 15, ?????s??? ??e?pa??t??, ????p???, ???? ??sµ??, Athènes, ??µ?? ????a???, ?e??fe?e?a?? ???t?ta ?e?t????? ??µ?a ??????, Attique, 11742, Grèce
-LocationLat=37.96857
-LocationLong=23.72848
+DisplayName=Louvre, Paris
+Address=Louvre Museum, Rue de Rivoli, Quartier Saint-Germain-l'Auxerrois, 1st Arrondissement, Paris, Ile-de-France, Metropolitan France, 75001, France
+LocationLat=48.86115
+LocationLong=2.33803
 
 ;You need an API key from DarkSky.net 
 ;To get an API key you need to sign up it's free
 ;You are allowed 1000 requests per day in the free plan. 
 ;This skin, by default, performs 4 requests an hour, so 96 requests per day per computer. 
 ;Do not reuse the same API key for more than 9 to 10 personnal computers.
-APIKey=YOURKEYHERE
+APIKey=c996c0bb82cb52c981fb58dcfbde662e
 
 ;Supported values and thus languages (ordered alphabetically) are: 
 ;ar - Arabic, az - Azerbaijani, be - Belarusian, bg - Bulgarian, bn - Bengali
@@ -23,10 +23,10 @@ APIKey=YOURKEYHERE
 ;pt - Portuguese, ro - Romanian, ru - Russian, sk - Slovak, sl - Slovenian, sr - Serbian
 ;sv - Swedish, ta - Tamil, te - Telugu, tet - Tetum, tr - Turkish, uk - Ukrainian
 ;ur - Urdu, zh - simplified Chinese, zh-tw - traditional Chinese
-lang=fr 
+lang=en 
 
 ;Values possible for the time and date language. The same as "lang", but it also supports defaulting to the Windows System Language
-SystemLang=fr 
+SystemLang=en 
 
 ; UnitOfMeasure can be auto, ca, uk2, us, si
 ; auto: automatically select units based on geographic location
@@ -34,14 +34,17 @@ SystemLang=fr
 ; uk2: same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
 ; us: Imperial units (the default)
 ; si: SI units
-UnitOfMeasure=us
+UnitOfMeasure=si
 
-ScrollMouseIncrement=0.02
-Scale=0.66
+;Increase or decrease this value to make the skin bigger or smaller.
+;A scale of "2.00" will be 4x the area.
+Scale=0.48
+Scroll=true
+ScaleChange=0.02
 
-Format=#I
-Hidden=1
-Hidden2=0
+Format=H
+Hidden=0
+Hidden2=1
 
 TextColor1=0,0,0
 TextColor2=255,255,255
@@ -50,3 +53,4 @@ SettingsTextColor2=255,255,255
 
 ;11644473600 is the amount of seconds between 01-01-1601 and 01-01-1970. It's the difference between Unix time and Windows time.
 UnixTimeOffset=11644473600
+Scroll=false
