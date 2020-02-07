@@ -38,7 +38,7 @@ UnitOfMeasure=si
 
 ;Increase or decrease this value to make the skin bigger or smaller.
 ;A scale of "2.00" will be 4x the area.
-Scale=0.36
+Scale=0.38
 Scroll=true
 ScaleChange=0.02
 
