@@ -1,9 +1,9 @@
 [Variables]
 
-DisplayName=Louvre, Paris
-Address=Louvre Museum, Rue de Rivoli, Quartier Saint-Germain-l'Auxerrois, 1st Arrondissement, Paris, Ile-de-France, Metropolitan France, 75001, France
-LocationLat=48.86115
-LocationLong=2.33803
+DisplayName=New York
+Address=Statue of Liberty, Flagpole Plaza, Liggett Terrace, Manhattan Community Board 1, Manhattan, New York County, New York, 10004, United States of America
+LocationLat=40.68925
+LocationLong=-74.04455
 
 ;You need an API key from DarkSky.net 
 ;To get an API key you need to sign up it's free
@@ -38,7 +38,7 @@ UnitOfMeasure=si
 
 ;Increase or decrease this value to make the skin bigger or smaller.
 ;A scale of "2.00" will be 4x the area.
-Scale=0.48
+Scale=0.36
 Scroll=true
 ScaleChange=0.02
 
@@ -46,7 +46,7 @@ Format=H
 Hidden=0
 Hidden2=1
 
-TextColor1=0,0,0
+TextColor1=255,255,255
 TextColor2=255,255,255
 SettingsTextColor1=0,0,0
 SettingsTextColor2=255,255,255
