@@ -3,7 +3,7 @@
 
 IconNames="clear-day":"clear_day", "clear-night":"clear_night", "rain":"rain", "snow":"snow", "sleet":"sleet", "wind":"wind", "fog":"fog", "cloudy":"cloudy", "partly-cloudy-day":"partly_cloudy_day", "partly-cloudy-night":"partly_cloudy_night", "hail":"sleet", "thunderstorm":"storm", "tornado":"storm", "":"unknown"
 
-CurrentRegExp=.*,"summary":"(.*)","icon":"(.*)",.*,"temperature":(.*),"apparentTemperature":(.*),"dewPoint":.*
+CurrentRegExp=.*"summary":"(.*)","icon":"(.*)","nearestStormDistance".*"temperature":(.*),"apparentTemperature":(.*),"dewPoint".*
 DayNRegExp="time":(.*),"summary":"(.*)","icon":"(.*)","sunriseTime".*,"temperatureHigh":(.*),.*,"temperatureLow":(.*),"temperatureLowTime":.*
 
 ;================================================

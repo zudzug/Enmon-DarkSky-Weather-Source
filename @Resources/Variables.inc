@@ -1,16 +1,16 @@
 [Variables]
 
-DisplayName=New York
-Address=Statue of Liberty, Flagpole Plaza, Liggett Terrace, Manhattan Community Board 1, Manhattan, New York County, New York, 10004, United States of America
-LocationLat=40.68925
-LocationLong=-74.04455
+DisplayName=Central Park, New York
+Address=Central Park, Manhattan, New York County, New York, United States of America
+LocationLat=40.78277
+LocationLong=-73.96536
 
 ;You need an API key from DarkSky.net 
 ;To get an API key you need to sign up it's free
 ;You are allowed 1000 requests per day in the free plan. 
 ;This skin, by default, performs 4 requests an hour, so 96 requests per day per computer. 
 ;Do not reuse the same API key for more than 9 to 10 personnal computers.
-APIKey=YOURKEYHERE
+APIKey=ENTERKEYHERE
 
 ;Supported values and thus languages (ordered alphabetically) are: 
 ;ar - Arabic, az - Azerbaijani, be - Belarusian, bg - Bulgarian, bn - Bengali
@@ -34,19 +34,21 @@ SystemLang=en
 ; uk2: same as si, except that nearestStormDistance and visibility are in miles and windSpeed is in miles per hour
 ; us: Imperial units (the default)
 ; si: SI units
-UnitOfMeasure=si
+UnitOfMeasure=us
 
 ;Increase or decrease this value to make the skin bigger or smaller.
 ;A scale of "2.00" will be 4x the area.
-Scale=0.32
+Scale=0.4
 Scroll=true
 ScaleChange=0.02
 
-Format=H
-Hidden=0
-Hidden2=1
+Format=#I
+Hidden=1
+Hidden2=0
+FeltLikeTemperature=0
+DisableSeconds=0
 
-TextColor1=255,255,255
+TextColor1=0,0,0
 TextColor2=255,255,255
 SettingsTextColor1=0,0,0
 SettingsTextColor2=255,255,255
