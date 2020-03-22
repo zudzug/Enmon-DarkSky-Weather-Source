@@ -1,7 +1,7 @@
 [Variables]
 
 DisplayName=Central Park, New York
-Address=Central Park, Manhattan, New York County, New York, United States of America
+Address=Central Park, Manhattan, New York County, New York, États-Unis
 LocationLat=40.78277
 LocationLong=-73.96536
 
@@ -10,7 +10,7 @@ LocationLong=-73.96536
 ;You are allowed 1000 requests per day in the free plan. 
 ;This skin, by default, performs 4 requests an hour, so 96 requests per day per computer. 
 ;Do not reuse the same API key for more than 9 to 10 personnal computers.
-APIKey=ENTERKEYHERE
+APIKey=ENTERYOURKEYHERE
 
 ;Supported values and thus languages (ordered alphabetically) are: 
 ;ar - Arabic, az - Azerbaijani, be - Belarusian, bg - Bulgarian, bn - Bengali
@@ -38,9 +38,18 @@ UnitOfMeasure=us
 
 ;Increase or decrease this value to make the skin bigger or smaller.
 ;A scale of "2.00" will be 4x the area.
-Scale=0.4
+Scale=0.64
+WeatherScale=0.58
+DriveScale=0.58
+CPUAndMemScale=0.66
+UploadDownloadScale=0.58
+ClockScale=0.36
+DateScale=0.56
+VisualizerScale=0.5
+SettingsScale=0.81
 Scroll=true
 ScaleChange=0.02
+ElementWidth=400
 
 Format=#I
 Hidden=1
@@ -52,6 +61,7 @@ TextColor1=0,0,0
 TextColor2=255,255,255
 SettingsTextColor1=0,0,0
 SettingsTextColor2=255,255,255
+BgColor=88,88,88,100
 
 ;11644473600 is the amount of seconds between 01-01-1601 and 01-01-1970. It's the difference between Unix time and Windows time.
 UnixTimeOffset=11644473600

@@ -7,7 +7,8 @@ License=Creative Commons Attribution-Non-Commercial-Share Alike 3.0
 ]]
 
 function Initialize()
-	Scale = SKIN:GetVariable('Scale', 'n/a')
+	SourceSkin = SELF:GetOption('SkinToScale')
+	Scale = SKIN:GetVariable(SourceSkin .. 'Scale', 'n/a')
 	ScaleChange = SKIN:GetVariable('ScaleChange', 'n/a')
 	Scroll = SKIN:GetVariable('Scroll', 'n/a')
 	if Scroll == "true" then
@@ -24,7 +25,7 @@ function Enlarge()
 	if Scroll == "true" then
 		if tonumber(Scale) < 4 then
 			Scale = Scale + ScaleChange
-			SKIN:Bang('!WriteKeyValue', 'Variables', 'Scale', Scale, '#@#Variables.inc')
+			SKIN:Bang('!WriteKeyValue', 'Variables', SourceSkin .. 'Scale', Scale, '#@#Variables.inc')
 		end
 	end
 end
@@ -32,7 +33,7 @@ function Smaller()
 	if Scroll == "true" then
 		if tonumber(Scale) > 0.2 then
 			Scale = Scale - ScaleChange
-			SKIN:Bang('!WriteKeyValue', 'Variables', 'Scale', Scale, '#@#Variables.inc')
+			SKIN:Bang('!WriteKeyValue', 'Variables', SourceSkin .. 'Scale', Scale, '#@#Variables.inc')
 		end
 	end
 end
